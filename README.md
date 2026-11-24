@@ -70,7 +70,7 @@ Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
 .\Build-OWGP-Launcher.ps1
 ```
 
-The script installs dependencies, runs the tests, and builds `release/OWGP-Launcher-Setup-1.0.0.exe`. You can also run `npm run dist` after `npm install`.
+The script installs dependencies, runs the tests, and builds `release/OWGP-Launcher-Setup-1.0.1.exe`. You can also run `npm run dist` after `npm install`.
 
 ## Publish launcher updates
 
@@ -102,3 +102,10 @@ GitHub Actions will run tests, build the NSIS installer, and publish release ass
 ## GitHub Actions build artifact
 
 After pushing this project to the `main` branch of the launcher repository, the `Build OWGP Launcher (Windows)` workflow runs tests and creates the setup EXE. Download it from the successful Actions run under **Artifacts**. The artifact is retained for 14 days. The separate `Build and publish OWGP Launcher` workflow publishes permanent launcher releases when a `launcher-v*` tag is pushed.
+
+## v1.0.1 IPC install hotfix
+
+- Installation and repair IPC handlers now catch errors and always return a plain serializable response.
+- Download progress events are throttled to avoid flooding Electron IPC during large downloads.
+- Installation errors are written to the launcher log at `%APPDATA%\owgp-launcher\logs\launcher.log` (the exact folder depends on Electron's userData path).
+- The UI displays the underlying install error instead of the opaque IPC reply failure when the handler can report it.

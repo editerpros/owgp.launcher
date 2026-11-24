@@ -69,10 +69,16 @@ async function refreshStatus() {
 
 async function perform(action) {
   try {
-    await action();
+    const result = await action();
+    if (result && result.success === false) {
+      const logHint = result.logPath ? `\nDetails saved to: ${result.logPath}` : '';
+      throw new Error(`${result.error || 'The operation failed.'}${logHint}`);
+    }
     await refreshStatus();
   } catch (error) {
-    setMessage(`Error: ${error.message}`);
+    const message = error.message || String(error);
+    await refreshStatus();
+    setMessage(`Error: ${message}`);
   }
 }
 
@@ -95,7 +101,10 @@ $('repo-link').addEventListener('click', event => {
   window.launcher.openExternal('https://github.com/Imagine-Cloud-Service/owgp-source');
 });
 
-window.launcher.onProgress(setProgress);
+window.launcher.onProgress(progress => {
+  setProgress(progress);
+  if (progress.phase === 'error') setMessage(`Installation failed: ${progress.message}`);
+});
 window.launcher.onBusy(setBusy);
 window.launcher.onLauncherUpdate(data => {
   const messages = {

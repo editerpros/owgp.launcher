@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Open Wheel Grand Prix launcher with GitHub cloud downloads, game repair, and launcher auto-updates.",
   "main": "src/main.js",
-  "author": "Imagine Cloud Service",
+  "author": "EditerPro Entertainments",
   "license": "UNLICENSED",
   "private": true,
   "engines": {

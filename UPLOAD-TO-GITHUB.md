@@ -7,7 +7,7 @@ Then open PowerShell inside the extracted launcher project folder and run:
 ```powershell
 git init -b main
 git add .
-git commit -m "Initial OWGP Launcher"
+git commit -m "OWGP Launcher v1.0.1 IPC hotfix"
 git remote add origin https://github.com/Imagine-Cloud-Service/owgp-launcher.git
 git push -u origin main
 ```
@@ -17,8 +17,8 @@ The push to `main` starts the Windows build workflow. When it completes successf
 To publish a permanent auto-update release after the build has been tested, create and push the matching version tag:
 
 ```powershell
-git tag launcher-v1.0.0
-git push origin launcher-v1.0.0
+git tag launcher-v1.0.1
+git push origin launcher-v1.0.1
 ```
 
 The release workflow publishes the installer and update metadata. Future launcher releases require increasing `version` in `package.json`, committing the change, and pushing a matching `launcher-vX.Y.Z` tag.
