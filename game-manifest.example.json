@@ -1,0 +1,11 @@
+{
+  "version": "1.0.0",
+  "platform": "win32-x64",
+  "archive": "OWGP-win-x64.zip",
+  "sha256": "REPLACE_WITH_64_CHARACTER_ARCHIVE_SHA256",
+  "entryPoint": "OWGP.exe",
+  "files": {
+    "OWGP.exe": "REPLACE_WITH_64_CHARACTER_FILE_SHA256",
+    "resources/app.asar": "REPLACE_WITH_64_CHARACTER_FILE_SHA256"
+  }
+}

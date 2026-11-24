@@ -1,0 +1,68 @@
+{
+  "name": "owgp-launcher",
+  "version": "1.0.0",
+  "description": "Open Wheel Grand Prix launcher with GitHub cloud downloads, game repair, and launcher auto-updates.",
+  "main": "src/main.js",
+  "author": "Imagine Cloud Service",
+  "license": "UNLICENSED",
+  "private": true,
+  "engines": {
+    "node": ">=22.0.0"
+  },
+  "scripts": {
+    "start": "electron .",
+    "test": "node --test",
+    "dist": "electron-builder --win nsis --x64",
+    "publish": "electron-builder --win nsis --x64 --publish always"
+  },
+  "dependencies": {
+    "electron-updater": "6.8.12",
+    "extract-zip": "2.0.1"
+  },
+  "devDependencies": {
+    "electron": "45.4.1",
+    "electron-builder": "26.18.1"
+  },
+  "build": {
+    "appId": "com.imaginecloud.owgp.launcher",
+    "productName": "OWGP Launcher",
+    "asar": true,
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "src/**/*",
+      "build/icon.ico",
+      "package.json"
+    ],
+    "win": {
+      "icon": "build/icon.ico",
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "artifactName": "OWGP-Launcher-Setup-${version}.${ext}"
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "OWGP Launcher"
+    },
+    "publish": [
+      {
+        "provider": "github",
+        "owner": "Imagine-Cloud-Service",
+        "repo": "owgp-launcher",
+        "releaseType": "release",
+        "tagNamePrefix": "launcher-v"
+      }
+    ]
+  }
+}
