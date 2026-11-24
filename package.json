@@ -64,5 +64,8 @@
         "tagNamePrefix": "launcher-v"
       }
     ]
+  },
+  "overrides": {
+    "yauzl": "3.3.1"
   }
 }

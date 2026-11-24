@@ -157,9 +157,34 @@ async function installLatest(send = () => {}) {
       throw new Error('The downloaded archive failed its SHA-256 check. Your current installation has not been changed. Please re-upload the matching ZIP and manifest to the same GitHub release.');
     }
 
-    report(send, { phase: 'extract', message: 'Extracting game files…' });
-    await extractZip(archivePath, { dir: stagingPath });
-    await logger.writeLog('info', 'OWGP archive extracted', { stagingPath });
+    
+report(send, { phase: 'extract', message: 'Extracting game files…' });
+
+await logger.writeLog(
+  'info',
+  'Starting extraction with Electron ASAR handling disabled'
+);
+
+const wasNoAsar = process.noAsar === true;
+
+try {
+  // app.asar in the game ZIP must be written as a normal file.
+  process.noAsar = true;
+
+  await extractZip(archivePath, {
+    dir: stagingPath
+  });
+} finally {
+  // Always restore Electron's normal filesystem behaviour.
+  process.noAsar = wasNoAsar;
+}
+
+await logger.writeLog(
+  'info',
+  'OWGP archive extracted',
+  { stagingPath }
+);
+
 
     report(send, { phase: 'verify', message: 'Verifying installed game files…' });
     for (const [relativePath, expectedHash] of Object.entries(manifest.files)) {
